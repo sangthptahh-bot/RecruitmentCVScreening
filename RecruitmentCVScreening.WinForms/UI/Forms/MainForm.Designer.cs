@@ -34,6 +34,8 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources.anhwin;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1703, 662);
             Name = "MainForm";
             Text = "MainForm";

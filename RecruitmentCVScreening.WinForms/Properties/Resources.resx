@@ -127,6 +127,9 @@
   <data name="9b7a7c8aa8dcbf1fb83575961f7f0953" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\9b7a7c8aa8dcbf1fb83575961f7f0953.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="65fec143c1e52ce63a34faf852bbb0e0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\65fec143c1e52ce63a34faf852bbb0e0.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="anh dang nhap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\anh dang nhap.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -160,7 +163,7 @@
   <data name="login" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\login.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="65fec143c1e52ce63a34faf852bbb0e0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\65fec143c1e52ce63a34faf852bbb0e0.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="anhwin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\anhwin.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

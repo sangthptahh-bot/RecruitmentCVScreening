@@ -109,6 +109,8 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
             // panelDesktop
             this.panelDesktop.Dock = DockStyle.Fill;
             this.panelDesktop.BackColor = Color.White;
+            this.panelDesktop.BackgroundImage = Properties.Resources.anhwin;
+            this.panelDesktop.BackgroundImageLayout = ImageLayout.Stretch;
 
             this.Controls.Add(this.panelDesktop);
             this.Controls.Add(this.panelHeader);
@@ -140,11 +142,6 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
 
         }
     }
-    /* =========================================================================
-     * CÁC CLASS GIẢ LẬP (MOCK FORMS) ĐỂ CHẠY THỬ
-     * Nhóm trưởng phân công cho các thành viên tạo các Form thật, sau đó xóa
-* các class này đi. Giao diện chính sẽ tự động liên kết với Form thật.
-     * ========================================================================= */
     /// Class Dashboard hiển thị các thông số thống kê tổng quan (Job, Ứng viên, Đơn)
     /// </summary>
     public class DashboardForm : Form
@@ -198,30 +195,6 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
             flowPanel.Controls.Add(cardCandidates);
             flowPanel.Controls.Add(cardPassedApps);
 
-            // THÊM MỚI: Thêm ảnh minh họa từ máy tính (nằm dưới các thẻ thống kê)
-            PictureBox picIllustration = new PictureBox
-            {
-                Location = new Point(1220, 40),
-                // Kích thước vuông vắn hơn, bao trọn khu vực bên phải
-                Size = new Size(210, 680),
-                SizeMode = PictureBoxSizeMode.Zoom, // Thu phóng giữ đúng tỷ lệ ảnh
-                BackColor = Color.Transparent,
-                // Neo ảnh bám vào cạnh phải và cạnh dưới để luôn ổn định khi mở lớn cửa sổ
-                Anchor = AnchorStyles.Bottom | AnchorStyles.Right
-            };
-            try
-            {
-                string imagePath = @"C:\Users\Admin\OneDrive\Hình ảnh\Camera Roll\anhdaidien.jpg";
-
-                picIllustration.Image = Image.FromFile(imagePath);
-            }
-            catch (Exception ex)
-            {
-                // Bỏ qua lỗi nếu bạn chưa sửa đường dẫn hoặc file không tồn tại
-                Console.WriteLine("Không tải được ảnh: " + ex.Message);
-            }
-            // Thêm hình ảnh vào giao diện chính
-            this.Controls.Add(picIllustration);
         }
 
         /// Hàm tối ưu hiệu suất truy vấn CSDL: Sử dụng ExecuteScalar để đếm số lượng nhanh nhất
@@ -322,10 +295,6 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
         }
     }
 
-    // Các class giả lập (Mock) cho các Form chưa ghép nối vào đây
-    // Nếu nhóm đã tạo các file riêng biệt (JobForm.cs, CandidateListForm.cs...) thì hãy XÓA các class dưới này đi để tránh lỗi trùng lặp CS0111
-    public class JobManagementForm : Form
-    {
-        public JobManagementForm() { }
-    }
+
+
 }
