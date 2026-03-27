@@ -135,6 +135,7 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
             childForm.Show();
 
             lblTitle.Text = childForm.Text.ToUpper();
+            panelDesktop.BackgroundImage = null;
         }
 
         private void MainForm_Load_1(object sender, EventArgs e)
