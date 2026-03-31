@@ -42,6 +42,8 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
             {
                 this.Controls["groupBox1"].Paint += KhungTrang_Paint;
             }
+            // BẮT BUỘC PHẢI CÓ DÒNG LỆNH GỌI HÀM NÀY SAU KHI KHỞI TẠO FORM
+            CreateForgotPasswordLink();
         }
         private void LoginForm_Load(object sender, EventArgs e)
         {
@@ -202,9 +204,8 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
         // === PHẦN CODE THÊM MỚI: QUÊN MẬT KHẨU (LOGIC XỬ LÝ) ===
         // ==========================================================
 
-        /// <summary>
-        /// Tạo một Link "Quên mật khẩu?" bằng code C# để không làm hỏng giao diện Design của bạn
-        /// </summary>
+        //Tạo một Link "Quên mật khẩu?" bằng code C# để không làm hỏng giao diện Design của bạn
+        
         private void CreateForgotPasswordLink()
         {
             LinkLabel linkForgot = new LinkLabel();
@@ -216,7 +217,7 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
 
             // Đặt link này nằm ở phía dưới nút Đăng nhập/Exit. 
             // Nếu vị trí bị lệch, có thể chỉnh 2 con số X (150) và Y (280):
-            linkForgot.Location = new Point(150, 280);
+            linkForgot.Location = new Point(120, 320);
 
             // Gắn sự kiện khi click vào chữ
             linkForgot.LinkClicked += LinkForgot_LinkClicked;
@@ -229,9 +230,8 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
             }
         }
 
-        /// <summary>
-        /// Sự kiện mở Cửa sổ khôi phục mật khẩu khi bấm vào link
-        /// </summary>
+        //Sự kiện mở Cửa sổ khôi phục mật khẩu khi bấm vào link
+        
         private void LinkForgot_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Code tạo một Form nhỏ (Dialog) tự động
