@@ -198,7 +198,125 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
                 ctrl.Region = new Region(path);
             }
         }
+        // ==========================================================
+        // === PHẦN CODE THÊM MỚI: QUÊN MẬT KHẨU (LOGIC XỬ LÝ) ===
+        // ==========================================================
+
+        /// <summary>
+        /// Tạo một Link "Quên mật khẩu?" bằng code C# để không làm hỏng giao diện Design của bạn
+        /// </summary>
+        private void CreateForgotPasswordLink()
+        {
+            LinkLabel linkForgot = new LinkLabel();
+            linkForgot.Text = "Quên mật khẩu?";
+            linkForgot.AutoSize = true;
+            linkForgot.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+            linkForgot.LinkColor = Color.FromArgb(0, 120, 215); // Màu xanh biển giống nút Login
+            linkForgot.ActiveLinkColor = Color.Red;
+
+            // Đặt link này nằm ở phía dưới nút Đăng nhập/Exit. 
+            // Nếu vị trí bị lệch, có thể chỉnh 2 con số X (150) và Y (280):
+            linkForgot.Location = new Point(150, 280);
+
+            // Gắn sự kiện khi click vào chữ
+            linkForgot.LinkClicked += LinkForgot_LinkClicked;
+
+            // Thêm vào khung trắng
+            if (this.Controls["groupBox1"] != null)
+            {
+                this.Controls["groupBox1"].Controls.Add(linkForgot);
+                linkForgot.BringToFront(); // Đưa lên trên cùng cho khỏi bị che
+            }
+        }
+
+        /// <summary>
+        /// Sự kiện mở Cửa sổ khôi phục mật khẩu khi bấm vào link
+        /// </summary>
+        private void LinkForgot_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Code tạo một Form nhỏ (Dialog) tự động
+            Form resetForm = new Form
+            {
+                Text = "Khôi phục mật khẩu",
+                Size = new Size(350, 260),
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                BackColor = Color.White
+            };
+
+            Label lblUser = new Label { Text = "Nhập Tên đăng nhập của bạn:", Location = new Point(20, 20), AutoSize = true, Font = new Font("Segoe UI", 9F, FontStyle.Bold) };
+            TextBox txtUserReset = new TextBox { Location = new Point(20, 45), Width = 290, Font = new Font("Segoe UI", 10F) };
+
+            Label lblNewPass = new Label { Text = "Nhập Mật khẩu mới:", Location = new Point(20, 85), AutoSize = true, Font = new Font("Segoe UI", 9F, FontStyle.Bold) };
+            TextBox txtNewPassReset = new TextBox { Location = new Point(20, 110), Width = 290, Font = new Font("Segoe UI", 10F), UseSystemPasswordChar = true };
+
+            Button btnConfirm = new Button
+            {
+                Text = "Xác nhận đổi mật khẩu",
+                Location = new Point(20, 160),
+                Width = 290,
+                Height = 40,
+                BackColor = Color.FromArgb(39, 174, 96), // Nút màu xanh lá cây
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold)
+            };
+            btnConfirm.FlatAppearance.BorderSize = 0;
+
+            // Xử lý khi bấm nút "Xác nhận đổi" trong form nhỏ
+            btnConfirm.Click += (s, args) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtUserReset.Text) || string.IsNullOrWhiteSpace(txtNewPassReset.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ Tên đăng nhập và Mật khẩu mới!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                try
+                {
+                    using (SqlConnection conn = AppDbContext.GetConnection())
+                    {
+                        conn.Open();
+                        // 1. Kiểm tra tài khoản có thực sự tồn tại trong DB không
+                        string checkSql = "SELECT COUNT(*) FROM Users WHERE Username = @user";
+                        SqlCommand checkCmd = new SqlCommand(checkSql, conn);
+                        checkCmd.Parameters.AddWithValue("@user", txtUserReset.Text.Trim());
+                        int exists = (int)checkCmd.ExecuteScalar();
+
+                        if (exists > 0)
+                        {
+                            // 2. Tài khoản hợp lệ -> Tiến hành Cập nhật Password
+                            string updateSql = "UPDATE Users SET Password = @pass WHERE Username = @user";
+                            SqlCommand updateCmd = new SqlCommand(updateSql, conn);
+                            updateCmd.Parameters.AddWithValue("@pass", txtNewPassReset.Text.Trim());
+                            updateCmd.Parameters.AddWithValue("@user", txtUserReset.Text.Trim());
+                            updateCmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Đổi mật khẩu thành công! Bạn có thể dùng mật khẩu mới để đăng nhập.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            resetForm.Close(); // Tự động đóng form khôi phục
+                        }
+                        else
+                        {
+                            MessageBox.Show("Tên đăng nhập không tồn tại trong hệ thống!", "Lỗi xác thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi kết nối cơ sở dữ liệu: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
+
+            resetForm.Controls.Add(lblUser);
+            resetForm.Controls.Add(txtUserReset);
+            resetForm.Controls.Add(lblNewPass);
+            resetForm.Controls.Add(txtNewPassReset);
+            resetForm.Controls.Add(btnConfirm);
+
+            // Bật form nhỏ lên màn hình
+            resetForm.ShowDialog();
+        }
     }
-
-
 }
