@@ -308,7 +308,6 @@ namespace RecruitmentCVScreening.WinForms.UI.Forms
                     MessageBox.Show("Lỗi kết nối cơ sở dữ liệu: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
-
             resetForm.Controls.Add(lblUser);
             resetForm.Controls.Add(txtUserReset);
             resetForm.Controls.Add(lblNewPass);
