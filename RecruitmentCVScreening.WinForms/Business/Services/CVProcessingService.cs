@@ -17,8 +17,24 @@ public class CVProcessingService
     public CandidateScoreDto Process(string fullName, string email, string filePath, Job job)
     {
         // 1. Đọc CV
-        ICVReader reader = new DocxCVReader();
-        var text = reader.ReadText(filePath);
+        string extension = Path.GetExtension(filePath).ToLower();
+
+        ICVReader reader;
+
+        if (extension == ".docx")
+        {
+            reader = new DocxCVReader();
+        }
+        else if (extension == ".pdf")
+        {
+            reader = new PdfCVReader();
+        }
+        else
+        {
+            throw new Exception("Định dạng file không hỗ trợ");
+        }
+
+        string text = reader.ReadText(filePath);
 
         // 2. Trích xuất thông tin
         var extractor = new CVInformationExtractor();
